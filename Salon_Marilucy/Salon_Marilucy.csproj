@@ -286,5 +286,8 @@
   <ItemGroup>
     <None Include="Resources\finalizar-la-sesion.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editar1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

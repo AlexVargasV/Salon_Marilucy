@@ -119,10 +119,10 @@ namespace Salon_Marilucy
             con.Close();
         }
 
-        public void insertarconsumodiario(string idtrabajador, string idservicios, string idcabecera, string horadegeneracion, string costo)
+        public void insertarconsumodiario(string idtrabajador, string idservicios, string idcabecera, string horadegeneracion, string costo, string mpago)
         {
             con.Open();
-            String sql = "INSERT INTO ingresos_diarios(TRABAJADOR_idtrabajador,SERVICIOS_idservicios,INGRESOS_idingresos,hora_generacion,costo) VALUES('" + idtrabajador + "','" + idservicios + "','" + idcabecera + "','" + horadegeneracion + "','" + costo + "')";
+            String sql = "INSERT INTO ingresos_diarios(TRABAJADOR_idtrabajador,SERVICIOS_idservicios,INGRESOS_idingresos,hora_generacion,costo,tipo_de_pago) VALUES('" + idtrabajador + "','" + idservicios + "','" + idcabecera + "','" + horadegeneracion + "','" + costo + "','" + mpago + "')";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             cmd.ExecuteNonQuery();
             con.Close();
@@ -132,13 +132,39 @@ namespace Salon_Marilucy
         public DataTable MostrarDatos(string idingresos)
         {
             con.Open();
-            String sql = "SELECT * FROM ingresos_diarios where INGRESOS_idingresos ='" + idingresos + "'";
+            String sql = "SELECT trabajador.nombres as Nombre,trabajador.apellidos as Apellido,servicios.nombre as Servicio,ingresos_diarios.hora_generacion as Hora,ingresos_diarios.costo as Costo, ingresos_diarios.tipo_de_pago as Pago FROM `ingresos_diarios` JOIN `trabajador` ON ingresos_diarios.TRABAJADOR_idtrabajador = trabajador.idtrabajador JOIN `servicios` ON ingresos_diarios.SERVICIOS_idservicios = servicios.idservicios WHERE INGRESOS_idingresos = '"+idingresos+"'";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             MySqlDataReader read = cmd.ExecuteReader();
             tabla.Load(read);
             con.Close();
             return tabla;
         }
+        public int sumarprecios(string idingresos)
+        {
+            con.Open();
+            String sql = "SELECT SUM(costo) FROM ingresos_diarios where INGRESOS_idingresos = '"+idingresos+"'";
+            int total = 0;
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            MySqlDataReader read = cmd.ExecuteReader();
+            while (read.Read())
+            {
+                total = Convert.ToInt32( read.GetString(0));
+            }
+            con.Close();
+
+            return total;
+        }
+        public bool finalizarfecha(String final, int total, string idcabecera)
+        {
+            con.Open();
+            String sql = "INSERT INTO ingresos(fecha_cierre,total) VALUES('"+final+"','" + total + "') WHERE idingresos = '"+idcabecera+"'";
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+            return true;
+
+        }
+
         private PrintDocument doc = new PrintDocument();
         private PrintPreviewDialog vista = new PrintPreviewDialog();
         public void imprimir(consumo p)
@@ -146,8 +172,8 @@ namespace Salon_Marilucy
             doc.PrinterSettings.PrinterName = doc.DefaultPageSettings.PrinterSettings.PrinterName;
             doc.PrintPage += new PrintPageEventHandler(imprimirticket);
             vista.Document = doc;
-            vista.Show();
-            doc.Print();
+            //vista.Show();
+            //doc.Print();
 
             
         }
@@ -157,6 +183,8 @@ namespace Salon_Marilucy
         public string fechacreada { get; set; }
 
         public string precio { get; set; }
+
+        public string metodo { get; set; }
         public void imprimirticket(object sender, PrintPageEventArgs e)
         {
             int posx, posy;
@@ -175,6 +203,8 @@ namespace Salon_Marilucy
                 e.Graphics.DrawString(nombretrabajador, fuente, Brushes.Black, posx, posy);
                 posy += 25;
                 e.Graphics.DrawString(precio, fuente, Brushes.Black, posx, posy);
+                posy += 25;
+                e.Graphics.DrawString(metodo, fuente, Brushes.Black, posx, posy);
             }
             catch(Exception ex )
             {

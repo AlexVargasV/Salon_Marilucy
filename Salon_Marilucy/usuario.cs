@@ -129,6 +129,7 @@ namespace Salon_Marilucy
 
         public void insertarusuario(string nombre, string apellidos, string ci, string permisos, string usuario, string contraseña)
         {
+
             con.Open();
             String sql = "INSERT INTO usuarios(nombre,apellidos,ci,permisos,usuario,contraseña) VALUES('" + nombre+"','"+apellidos+"','"+ci+"','"+permisos+"','"+usuario+"','"+contraseña+"')";
             MySqlCommand cmd = new MySqlCommand(sql, con);
