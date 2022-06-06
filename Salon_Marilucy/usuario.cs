@@ -11,6 +11,7 @@ namespace Salon_Marilucy
 {
     class usuario
     {
+       public string restriccion = "";
         MySqlConnection con = new MySqlConnection("Server=localhost; Database=mary_lucy; Uid=root;  Pwd=;");
         public void coneccion()
         {
@@ -50,6 +51,7 @@ namespace Salon_Marilucy
             while (read.Read())
             {
                 valor = String.Format("{0}", read[0]);
+                restriccion = valor;
             }
             if(valor == "1")
             {
@@ -113,6 +115,17 @@ namespace Salon_Marilucy
             return tabla;
         }
 
+        public DataTable MostrarServicios()
+        {
+            con.Open();
+            String sql = "SELECT nombre as Nombre, precio as Precio FROM servicios where dbactivo = 0";
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            MySqlDataReader read = cmd.ExecuteReader();
+            tabla.Load(read);
+            con.Close();
+            return tabla;
+        }
+
         public void CargarCombo(ComboBox combo1)
         {
             con.Open();
@@ -157,10 +170,27 @@ namespace Salon_Marilucy
             con.Close();
         }
 
+        public void actualizar_servicios(int idcat, string nombre, int precio)
+        {
+            con.Open();
+            String sql = "UPDATE servicios set CATEGORIA_idcategoria='" + idcat + "', nombre='" + nombre + "', precio='" + precio + "' WHERE nombre='" + nombre + "'";
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
         public void eliminar(string id)
         {
             con.Open();
             String sql = " UPDATE usuarios set dbactivo=1 where iduser='"+id+"'  ";
+            MySqlCommand cmd = new MySqlCommand(sql, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        public void eliminarServicio(string nombre)
+        {
+            con.Open();
+            String sql = " UPDATE servicios set dbactivo=1 where nombre='" + nombre + "'  ";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             cmd.ExecuteNonQuery();
             con.Close();

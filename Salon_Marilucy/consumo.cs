@@ -96,7 +96,7 @@ namespace Salon_Marilucy
         public void CargarCombo(ComboBox combo1)
         {
             con.Open();
-            String sql = "SELECT nombres,apellidos FROM trabajador";
+            String sql = "SELECT nombres,apellidos FROM trabajador WHERE dbactivo = 0";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             MySqlDataReader read = cmd.ExecuteReader();
             while (read.Read())
@@ -109,7 +109,7 @@ namespace Salon_Marilucy
         public void CargarServicios(ComboBox combo1)
         {
             con.Open();
-            String sql = "SELECT nombre FROM servicios";
+            String sql = "SELECT nombre FROM servicios WHERE dbactivo = 0";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             MySqlDataReader read = cmd.ExecuteReader();
             while (read.Read())
@@ -157,7 +157,7 @@ namespace Salon_Marilucy
         public bool finalizarfecha(String final, int total, string idcabecera)
         {
             con.Open();
-            String sql = "INSERT INTO ingresos(fecha_cierre,total) VALUES('"+final+"','" + total + "') WHERE idingresos = '"+idcabecera+"'";
+            String sql = "UPDATE ingresos SET fecha_cierre = '"+final+"', total = '"+total+"' WHERE idingresos = '"+idcabecera+"'";
             MySqlCommand cmd = new MySqlCommand(sql, con);
             cmd.ExecuteNonQuery();
             con.Close();
@@ -172,7 +172,7 @@ namespace Salon_Marilucy
             doc.PrinterSettings.PrinterName = doc.DefaultPageSettings.PrinterSettings.PrinterName;
             doc.PrintPage += new PrintPageEventHandler(imprimirticket);
             vista.Document = doc;
-            //vista.Show();
+            vista.Show();
             //doc.Print();
 
             

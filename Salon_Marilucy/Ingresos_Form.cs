@@ -32,9 +32,19 @@ namespace Salon_Marilucy
             int total = ingresos.sumarprecios(idcabecera);
             String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             ingresos.finalizarfecha(date,total,idcabecera);
+            MessageBox.Show("En el dia se tuvo ingresos de: "+ total);
             idcabecera = "";
             idservicio = "";
             idtrabajador = "";
+            comboBox1.Enabled = false;
+            comboservicio.Enabled = false;
+            cmbmetododepago.Enabled = false;
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
+            comboBox1.Text = "";
+            comboservicio.Text = "";
+            cmbmetododepago.Text = "";
+            txtprecio.Clear();
         }
 
         private void btniniciar_Click(object sender, EventArgs e)
@@ -49,12 +59,12 @@ namespace Salon_Marilucy
             comboBox1.Enabled = true;
             comboservicio.Enabled = true;
             cmbmetododepago.Enabled = true;
-            dataGridView1.DataSource = ingresos.MostrarDatos(idcabecera);
 
         }
 
         private void Ingresos_Form_Load(object sender, EventArgs e)
         {
+
             comboBox1.Enabled = false;
             comboservicio.Enabled = false;
             cmbmetododepago.Enabled = false;
@@ -63,7 +73,6 @@ namespace Salon_Marilucy
             ingresos.CargarServicios(comboservicio);
             btngenerar.Enabled = false;
             txtprecio.Enabled = false;
-            dataGridView1.DataSource = ingresos.MostrarDatos(idcabecera);
             
         }
 
@@ -72,6 +81,12 @@ namespace Salon_Marilucy
 
         }
 
+        private void MostrarProductos()
+        {
+            consumo ingresos1 = new consumo();
+            dataGridView1.DataSource = "" ;
+            dataGridView1.DataSource = ingresos1.MostrarDatos(idcabecera);
+        }
         private void btngenerar_Click(object sender, EventArgs e)
         {
             String date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -84,19 +99,20 @@ namespace Salon_Marilucy
             ingresos.precio = precio;
             ingresos.imprimir(ingresos);
             ingresos.insertarconsumodiario(idtrabajador,idservicio,idcabecera,date,txtprecio.Text,metodo);
-            dataGridView1.DataSource = ingresos.MostrarDatos(idcabecera);
+            MostrarProductos();
 
         }
 
         private void comboservicio_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             txtprecio.Text = ingresos.obtenerprecio(comboservicio.SelectedItem.ToString());
             idservicio = ingresos.obteneridservicio(comboservicio.SelectedItem.ToString());
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             idtrabajador = ingresos.obteneridtrabajador(comboBox1.SelectedItem.ToString());
         }
     }

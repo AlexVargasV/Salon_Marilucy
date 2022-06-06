@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="activos.cs" />
     <Compile Include="Activos_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +121,7 @@
     <Compile Include="gestorqrform.Designer.cs">
       <DependentUpon>gestorqrform.cs</DependentUpon>
     </Compile>
+    <Compile Include="ingresos_diarios.cs" />
     <Compile Include="Ingresos_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +134,18 @@
     <Compile Include="main_form.Designer.cs">
       <DependentUpon>main_form.cs</DependentUpon>
     </Compile>
+    <Compile Include="mirar_ingresos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mirar_ingresos.Designer.cs">
+      <DependentUpon>mirar_ingresos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="prestamo_activos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="prestamo_activos.Designer.cs">
+      <DependentUpon>prestamo_activos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\servicio.cs" />
@@ -141,6 +155,7 @@
     <Compile Include="Servicios_Form.Designer.cs">
       <DependentUpon>Servicios_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="trabajador.cs" />
     <Compile Include="Trabajadores_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +186,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="main_form.resx">
       <DependentUpon>main_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mirar_ingresos.resx">
+      <DependentUpon>mirar_ingresos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="prestamo_activos.resx">
+      <DependentUpon>prestamo_activos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -288,6 +309,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\editar1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-interface-symbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\libro.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

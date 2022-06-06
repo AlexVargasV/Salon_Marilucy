@@ -113,5 +113,10 @@ namespace Salon_Marilucy
         {
             Abrirforminpanel(new Trabajadores_Form());
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Abrirforminpanel(new mirar_ingresos());
+        }
     }
 }

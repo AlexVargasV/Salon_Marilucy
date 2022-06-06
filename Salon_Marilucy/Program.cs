@@ -16,7 +16,7 @@ namespace Salon_Marilucy
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Ingresos_Form());
+            Application.Run(new Form1());
         }
     }
 }

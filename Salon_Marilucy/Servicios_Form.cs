@@ -34,6 +34,7 @@ namespace Salon_Marilucy
             {
                 
                 flag = false;
+                user.actualizar_servicios(idproducto,nombre,precio);
                 MostrarProductos();
             }
             else
@@ -50,7 +51,8 @@ namespace Salon_Marilucy
         }
         private void MostrarProductos()
         {
-            dataGridView1.DataSource = user.MostrarDatos("servicios");
+            usuario user1 = new usuario();
+            dataGridView1.DataSource = user1.MostrarServicios();
         }
         private void Servicios_Form_Load(object sender, EventArgs e)
         {
@@ -62,14 +64,23 @@ namespace Salon_Marilucy
         {
 
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 flag = true;
-                txtnombre.Text = dataGridView1.CurrentRow.Cells["nombre"].Value.ToString();
-                txtprecio.Text = dataGridView1.CurrentRow.Cells["precio"].Value.ToString();
+                txtnombre.Text = dataGridView1.CurrentRow.Cells["Nombre"].Value.ToString();
+                txtprecio.Text = dataGridView1.CurrentRow.Cells["Precio"].Value.ToString();
+                if (cmbcategoria.Text != " ")
+                {
+
+                    //button2.Visible = false;
+                }
+                else
+                {
+                    MessageBox.Show("Por Favor llene el campo categoria");
+                }
         
 
             }
@@ -86,7 +97,16 @@ namespace Salon_Marilucy
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                string nombre = dataGridView1.CurrentRow.Cells["Nombre"].Value.ToString();
+                user.eliminarServicio(nombre);
+                MostrarProductos();
+            }
+            else
+            {
+                MessageBox.Show("Por favor Seleccione una fila");
+            }
         }
     }
 }
